@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#12345a">
+    <title>Manage Products | MobileHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/storefront.css">
+    <script src="../scripts/cart.js" defer></script>
+    <script src="../scripts/auth.js" defer></script>
+    <script src="../scripts/admin-products.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-top">
+            <a class="brand" href="Home-Page.html" aria-label="MobileHub home"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a>
+            <form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="admin-search">Search smartphones</label><input id="admin-search" type="search" placeholder="Search phones, brands and models"><button type="submit" aria-label="Search">⌕</button></form>
+            <div class="header-actions"><a class="nav-cart" href="Cart.html">Cart <span class="cart-count" data-cart-count>0</span></a></div>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation"><a href="Home-Page.html">Home</a><a href="Products.html">All phones</a><a href="About.html">About</a><a href="Contact.html">Contact</a><a href="Login-Page.html">Login</a><a href="Register-Page.html">Register</a></nav>
+    </header>
+    <main class="page-shell management-page">
+        <section class="page-intro catalog-intro"><p class="eyebrow">ADMINISTRATION</p><h1>Manage your<br><span>catalog.</span></h1><p>Add, update, search, or remove products and set available inventory.</p></section>
+        <section class="management-panel">
+            <div class="section-heading"><div><p class="eyebrow">PRODUCT DETAILS</p><h2 data-product-form-title>Add a product</h2></div><button class="button button-outline" type="button" data-product-form-reset>New product</button></div>
+            <p class="management-status" data-admin-status role="status" aria-live="polite"></p>
+            <form class="product-management-form" data-product-form>
+                <label>Product ID<input name="id" required maxlength="255" pattern="[A-Za-z0-9][A-Za-z0-9._-]*" placeholder="brand-model"></label>
+                <label>Brand<input name="brand" required maxlength="255"></label>
+                <label>Model name<input name="model" required maxlength="255"></label>
+                <label>Price (₹)<input name="price" type="number" min="0.01" step="0.01" required></label>
+                <label>RAM<input name="ram" required maxlength="255" placeholder="8 GB"></label>
+                <label>Storage<input name="storage" required maxlength="255" placeholder="256 GB"></label>
+                <label>Display<input name="display" required maxlength="300"></label>
+                <label>Processor<input name="processor" required maxlength="200"></label>
+                <label>Camera<input name="camera" required maxlength="300"></label>
+                <label>Battery<input name="battery" required maxlength="255"></label>
+                <label>Rating<input name="rating" type="number" min="0" max="5" step="0.1" required></label>
+                <label>Launch year<input name="year" type="number" min="2000" max="2100" step="1" required></label>
+                <label>Stock quantity<input name="stock" type="number" min="0" max="2147483647" step="1" required value="0"></label>
+                <label class="management-field-wide">Image URL<input name="image" type="url" required maxlength="1000"></label>
+                <label class="management-field-wide">Fallback image URL<input name="fallbackImage" type="url" maxlength="1000"></label>
+                <div class="management-field-wide management-form-actions"><button class="button button-dark" type="submit">Save product</button><button class="button button-outline" type="button" data-product-form-reset>Cancel</button></div>
+            </form>
+        </section>
+        <section class="management-panel">
+            <div class="catalog-heading"><h2>Product inventory</h2><span data-admin-product-count>Loading…</span></div>
+            <label class="management-search">Search by product ID, brand, or name<input type="search" data-admin-search placeholder="Search catalog"></label>
+            <div class="management-table-wrap"><table class="management-table"><thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Actions</th></tr></thead><tbody data-admin-products><tr><td colspan="4">Loading products…</td></tr></tbody></table></div>
+        </section>
+    </main>
+    <footer class="site-footer"><div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Find your next favourite phone.</p></div><div class="footer-links"><a href="About.html">About Us</a><a href="Contact.html">Contact</a><a href="Privacy-Policy.html">Privacy Policy</a></div><small>© 2026 MobileHub · Demo storefront</small></footer>
+</body>
+</html>

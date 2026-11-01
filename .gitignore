@@ -1,0 +1,45 @@
+# Maven build output
+target/
+
+# IDE metadata and temporary workspace files
+.idea/
+.vs/
+*.iml
+.vscode/*.log
+
+# Operating-system and editor temporary files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Logs and generated diagnostic output
+*.log
+hs_err_pid*
+
+# Local environment configuration and secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+application-local.yml
+application-local.yaml
+application-secrets.properties
+application-secrets.yml
+application-secrets.yaml
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets.*
+credentials.*
+secrets/
+
+# Generated temporary files
+*.tmp
+*.temp
+# Ignore bundled JDK files
+pages/oracleJdk-27/
