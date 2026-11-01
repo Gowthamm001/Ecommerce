@@ -57,6 +57,7 @@ Ecommerce/
 ├── styles/                  Storefront stylesheets
 ├── target/                  Maven-generated build and test output
 ├── bg-video.mp4             Homepage video asset
+├── index.html               GitHub Pages entry point; redirects to the storefront page
 ├── pom.xml                  Maven project and resource configuration
 ├── .gitignore               Local/generated-file ignore rules
 └── README.md                Project documentation
@@ -73,6 +74,8 @@ The current HTML pages are in `pages/`. They load the shared storefront styleshe
 - `styles/storefront.css` is linked by the current pages.
 
 Open the application through Spring Boot (for example, `http://localhost:8080/pages/Home-Page.html`). Opening an HTML file directly from disk does not provide the same-origin API endpoints.
+
+The root `index.html` redirects GitHub Pages visitors to `pages/Home-Page.html` instead of displaying the README. GitHub Pages only hosts static files; the product API, authentication, database-backed cart, admin tools, and checkout still require the Spring Boot backend and MySQL to be deployed separately. The project remains fully integrated when run through Spring Boot.
 
 ### Backend
 
