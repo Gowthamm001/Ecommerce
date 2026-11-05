@@ -29,20 +29,37 @@
     function cardMarkup(product) {
         const productUrl = `Product-Details.html?id=${encodeURIComponent(product.id)}`;
         const outOfStock = Number(product.stock) < 1;
+        const category = product.category || "Mobiles";
+        const hasRamStorage = product.ram && product.ram !== "N/A" && product.storage && product.storage !== "N/A";
+        const specSummary = hasRamStorage
+            ? `${escapeHtml(product.ram)} RAM · ${escapeHtml(product.storage)} · ${escapeHtml(product.display)}`
+            : (product.display && product.display !== "N/A"
+                ? escapeHtml(product.display)
+                : `${escapeHtml(category)} · Year ${escapeHtml(product.year)}`);
+
+        const validSpecs = [
+            { label: "Processor", value: product.processor },
+            { label: "Camera", value: product.camera },
+            { label: "Battery", value: product.battery }
+        ].filter((s) => s.value && s.value !== "N/A");
+
+        const specsHtml = validSpecs.length > 0
+            ? validSpecs.map((s) => `<div><dt>${escapeHtml(s.label)}</dt><dd>${escapeHtml(s.value)}</dd></div>`).join("")
+            : `<div><dt>Category</dt><dd>${escapeHtml(category)}</dd></div><div><dt>Year</dt><dd>${escapeHtml(product.year)}</dd></div><div><dt>Rating</dt><dd>★ ${Number(product.rating).toFixed(1)} / 5</dd></div>`;
+
         return `<article class="phone-card" data-product-id="${escapeHtml(product.id)}">
             <div class="phone-card-image">
                 <a href="${productUrl}" aria-label="View ${escapeHtml(product.brand)} ${escapeHtml(product.model)} details">
                     ${imageMarkup(product)}
                 </a>
                 <span class="phone-card-brand">${escapeHtml(brandLabel(product.brand))}</span>
+                <span class="card-category-badge">${escapeHtml(category)}</span>
             </div>
             <div class="phone-card-content">
                 <div class="phone-card-title-row"><h3>${escapeHtml(product.model)}</h3><span class="phone-rating">★ ${Number(product.rating).toFixed(1)}</span></div>
-                <p class="phone-card-spec">${escapeHtml(product.ram)} RAM · ${escapeHtml(product.storage)} storage · ${escapeHtml(product.display)}</p>
+                <p class="phone-card-spec">${specSummary}</p>
                 <dl class="spec-list">
-                    <div><dt>Processor</dt><dd>${escapeHtml(product.processor)}</dd></div>
-                    <div><dt>Camera</dt><dd>${escapeHtml(product.camera)}</dd></div>
-                    <div><dt>Battery</dt><dd>${escapeHtml(product.battery)}</dd></div>
+                    ${specsHtml}
                 </dl>
                 <div class="phone-price"><strong>${formatPrice(product.price)}</strong></div>
                 <p class="stock-status${outOfStock ? " is-out" : ""}">${outOfStock ? "Out of stock" : `${Number(product.stock)} in stock`}</p>
@@ -54,10 +71,10 @@
         </article>`;
     }
 
-    function renderGrid(container, list, emptyMessage = "No phones match those filters.") {
+    function renderGrid(container, list, emptyMessage = "No products match those filters.") {
         if (!container) return;
         if (list.length === 0) {
-            container.innerHTML = `<div class="no-results"><strong>${escapeHtml(emptyMessage)}</strong><p>Try another search or browse all phones.</p></div>`;
+            container.innerHTML = `<div class="no-results"><strong>${escapeHtml(emptyMessage)}</strong><p>Try another search or browse all products.</p></div>`;
             return;
         }
         container.innerHTML = list.map(cardMarkup).join("");
@@ -84,6 +101,11 @@
 
     function selectedProductList() {
         const search = document.querySelector("[data-catalog-search]")?.value.trim().toLowerCase() || "";
+        const activeCatPill = document.querySelector("[data-category-pill].is-active")?.dataset.categoryPill;
+        const categorySelect = document.querySelector("[data-filter-category]")?.value;
+        const category = (activeCatPill !== undefined && activeCatPill !== "")
+            ? activeCatPill
+            : (categorySelect || "");
         const brand = document.querySelector("[data-filter-brand]")?.value || "";
         const minimumPrice = Number(document.querySelector("[data-filter-min-price]")?.value || 0);
         const maximumPriceInput = document.querySelector("[data-filter-max-price]")?.value || "";
@@ -94,17 +116,19 @@
         const sort = document.querySelector("[data-filter-sort]")?.value || "featured";
 
         const filtered = products.filter((product) => {
-            const matchesSearch = !search || `${product.brand} ${product.model} ${product.ram} ${product.storage}`.toLowerCase().includes(search);
+            const prodCat = product.category || "Mobiles";
+            const matchesCat = !category || prodCat.toLowerCase() === category.toLowerCase();
+            const matchesSearch = !search || `${product.brand} ${product.model} ${prodCat} ${product.ram || ""} ${product.storage || ""} ${product.processor || ""}`.toLowerCase().includes(search);
             const matchesBrand = !brand || product.brand === brand;
-            const matchesRAM = !ram || parseInt(product.ram, 10) >= Number(ram);
-            const storageCapacity = product.storage.toLowerCase().includes("tb")
+            const matchesRAM = !ram || (product.ram && parseInt(product.ram, 10) >= Number(ram));
+            const storageCapacity = (product.storage && product.storage.toLowerCase().includes("tb"))
                 ? parseFloat(product.storage) * 1024
-                : parseInt(product.storage, 10);
+                : (product.storage ? parseInt(product.storage, 10) : 0);
             const matchesStorage = !storage || storageCapacity >= Number(storage);
-            const megapixels = Number(product.camera.match(/(\d+)\s*MP/i)?.[1] || 0);
+            const megapixels = Number((product.camera || "").match(/(\d+)\s*MP/i)?.[1] || 0);
             const matchesCamera = !camera || megapixels >= camera;
             const matchesPrice = Number(product.price) >= minimumPrice && Number(product.price) <= maximumPrice;
-            return matchesSearch && matchesBrand && matchesRAM && matchesStorage && matchesCamera && matchesPrice;
+            return matchesCat && matchesSearch && matchesBrand && matchesRAM && matchesStorage && matchesCamera && matchesPrice;
         });
 
         const sorters = {
@@ -119,6 +143,17 @@
     function initCatalog() {
         const grid = document.querySelector("[data-product-grid]");
         if (!grid) return;
+
+        const categoryPills = document.querySelectorAll("[data-category-pill]");
+        const categorySelect = document.querySelector("[data-filter-category]");
+        const urlCategory = params.get("category");
+
+        if (urlCategory) {
+            if (categorySelect) categorySelect.value = urlCategory;
+            categoryPills.forEach((pill) => {
+                pill.classList.toggle("is-active", pill.dataset.categoryPill.toLowerCase() === urlCategory.toLowerCase());
+            });
+        }
 
         const brandFilter = document.querySelector("[data-filter-brand]");
         if (brandFilter) {
@@ -155,19 +190,56 @@
         }
         const sortFilter = document.querySelector("[data-filter-sort]");
         if (sortFilter && params.has("sort")) sortFilter.value = params.get("sort");
+
         const update = () => {
             const visible = selectedProductList();
             renderGrid(grid, visible);
             const count = document.querySelector("[data-results-count]");
-            if (count) count.textContent = `${visible.length} ${visible.length === 1 ? "phone" : "phones"}`;
+            if (count) count.textContent = `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
         };
+
+        categoryPills.forEach((pill) => {
+            pill.addEventListener("click", () => {
+                categoryPills.forEach((p) => p.classList.remove("is-active"));
+                pill.classList.add("is-active");
+                if (categorySelect) categorySelect.value = pill.dataset.categoryPill;
+                const url = new URL(window.location.href);
+                if (pill.dataset.categoryPill) {
+                    url.searchParams.set("category", pill.dataset.categoryPill);
+                } else {
+                    url.searchParams.delete("category");
+                }
+                window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+                update();
+            });
+        });
+
+        if (categorySelect) {
+            categorySelect.addEventListener("change", () => {
+                const val = categorySelect.value;
+                categoryPills.forEach((pill) => {
+                    pill.classList.toggle("is-active", pill.dataset.categoryPill === val);
+                });
+                const url = new URL(window.location.href);
+                if (val) {
+                    url.searchParams.set("category", val);
+                } else {
+                    url.searchParams.delete("category");
+                }
+                window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+                update();
+            });
+        }
+
         document.querySelectorAll("[data-catalog-search], [data-filter-brand], [data-filter-min-price], [data-filter-max-price], [data-filter-ram], [data-filter-storage], [data-filter-camera], [data-filter-sort]")
             .forEach((control) => control.addEventListener(control.matches("input") ? "input" : "change", update));
         document.querySelector("[data-clear-filters]")?.addEventListener("click", () => {
             document.querySelectorAll("[data-catalog-search], [data-filter-brand], [data-filter-min-price], [data-filter-max-price], [data-filter-ram], [data-filter-storage], [data-filter-camera]").forEach((control) => { control.value = ""; });
+            if (categorySelect) categorySelect.value = "";
+            categoryPills.forEach((p, idx) => p.classList.toggle("is-active", idx === 0));
             document.querySelector("[data-filter-sort]").value = "featured";
             const url = new URL(window.location.href);
-            ["q", "brand", "minPrice", "maxPrice", "price", "sort"].forEach((key) => url.searchParams.delete(key));
+            ["q", "brand", "minPrice", "maxPrice", "price", "sort", "category"].forEach((key) => url.searchParams.delete(key));
             window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
             update();
         });
@@ -175,17 +247,27 @@
     }
 
     function initHome() {
-        renderGrid(document.querySelector("[data-home-featured]"), [...products].sort((a, b) => b.rating - a.rating).slice(0, 4),
-            "Featured phones are coming soon.");
+        renderGrid(document.querySelector("[data-home-featured]"),
+            [...products].filter((p) => (p.category || "Mobiles") === "Mobiles").sort((a, b) => b.rating - a.rating).slice(0, 4),
+            "Featured mobiles are coming soon.");
+        renderGrid(document.querySelector("[data-home-laptops]"),
+            [...products].filter((p) => p.category === "Laptops").slice(0, 4),
+            "Top laptops will be available soon.");
+        renderGrid(document.querySelector("[data-home-electronics]"),
+            [...products].filter((p) => p.category === "Electronics").slice(0, 4),
+            "Electronics will be available soon.");
+        renderGrid(document.querySelector("[data-home-accessories]"),
+            [...products].filter((p) => p.category === "Accessories").slice(0, 4),
+            "Accessories will be available soon.");
         renderGrid(document.querySelector("[data-home-trending]"), [...products]
-            .sort((a, b) => b.year - a.year || b.rating - a.rating).slice(0, 4), "No trending phones are available yet.");
+            .sort((a, b) => b.year - a.year || b.rating - a.rating).slice(0, 4), "No trending products are available yet.");
         renderGrid(document.querySelector("[data-home-deals]"), [...products]
             .filter((product) => Number(product.price) <= 50000)
             .sort((a, b) => Number(a.price) - Number(b.price)).slice(0, 4), "No value picks are available yet.");
 
         const brandContainer = document.querySelector("[data-popular-brands]");
         if (brandContainer) {
-            const brandOrder = ["Apple", "Samsung", "OnePlus", "Xiaomi", "Redmi", "Realme", "Vivo", "Oppo", "iQOO", "Google", "Motorola", "Nothing"];
+            const brandOrder = ["Apple", "Samsung", "Dell", "Lenovo", "Sony", "OnePlus", "Xiaomi", "ASUS", "Logitech", "Google"];
             const availableBrands = new Set(products.map((product) => product.brand));
             const brandValues = {
                 Xiaomi: "Xiaomi",
@@ -196,6 +278,13 @@
                 `<a class="popular-brand" href="Products.html?brand=${encodeURIComponent(brandValues[label] || label)}" data-brand-link="${escapeHtml(brandValues[label] || label)}"><span>${escapeHtml(label.slice(0, 1))}</span><strong>${escapeHtml(label)}</strong></a>`
             ).join("");
         }
+
+        document.querySelectorAll("[data-category-card]").forEach((card) => {
+            card.addEventListener("click", () => {
+                const cat = card.dataset.categoryCard;
+                window.location.href = `Products.html${cat ? `?category=${encodeURIComponent(cat)}` : ""}`;
+            });
+        });
     }
 
     function initDetails() {
@@ -203,14 +292,34 @@
         if (!target) return;
         const product = products.find((entry) => entry.id === params.get("id"));
         if (!product) {
-            target.innerHTML = '<div class="no-results"><h1>We could not find that phone.</h1><p>It may have been removed from the catalogue.</p><a class="button button-dark" href="Products.html">Browse phones</a></div>';
+            target.innerHTML = '<div class="no-results"><h1>We could not find that product.</h1><p>It may have been removed from the catalogue.</p><a class="button button-dark" href="Products.html">Browse products</a></div>';
             return;
         }
+        const category = product.category || "Mobiles";
         const detailImages = Array.isArray(product.images) && product.images.length
             ? product.images
             : [product.image || fallbackFor(product)];
         const outOfStock = Number(product.stock) < 1;
-        target.innerHTML = `<p class="detail-back"><a href="Products.html">← Back to all phones</a></p>
+        const vRam = product.ram || "Standard";
+        const vStorage = product.storage || "Standard";
+
+        const specRows = [
+            { label: "Category", value: category },
+            { label: "Brand", value: brandLabel(product.brand) },
+            { label: "Display", value: product.display },
+            { label: "RAM", value: product.ram },
+            { label: "Storage", value: product.storage },
+            { label: "Processor", value: product.processor },
+            { label: "Camera", value: product.camera },
+            { label: "Battery", value: product.battery },
+            { label: "Launch year", value: product.year }
+        ].filter((s) => s.value && s.value !== "N/A" && s.value !== "NA");
+
+        const specsHtml = specRows.map((s) =>
+            `<div><dt>${escapeHtml(s.label)}</dt><dd>${escapeHtml(s.value)}</dd></div>`
+        ).join("");
+
+        target.innerHTML = `<p class="detail-back"><a href="Products.html?category=${encodeURIComponent(category)}">← Back to ${escapeHtml(category)}</a> · <a href="Products.html">All products</a></p>
         <section class="detail-layout">
             <div class="detail-gallery">
                 <div class="detail-main-image">${imageMarkup(product, "detail-image")}</div>
@@ -220,22 +329,20 @@
                 }).join("")}</div>
             </div>
             <div class="detail-copy">
-                <p class="eyebrow">${escapeHtml(brandLabel(product.brand))}</p><h1>${escapeHtml(product.model)}</h1>
+                <div class="detail-meta-top"><span class="card-category-badge">${escapeHtml(category)}</span><p class="eyebrow">${escapeHtml(brandLabel(product.brand))}</p></div>
+                <h1>${escapeHtml(product.model)}</h1>
                 <p class="detail-rating">★★★★★ <strong>${Number(product.rating).toFixed(1)}</strong> <span>Customer rating</span></p>
                 <p class="detail-price"><strong>${formatPrice(product.price)}</strong></p>
                 <p class="stock-status${outOfStock ? " is-out" : ""}">${outOfStock ? "Out of stock" : `${Number(product.stock)} in stock`}</p>
                 <p class="detail-description">${escapeHtml(product.description)}</p>
-                <div class="detail-actions"><button class="button button-dark add-to-cart" type="button" data-product-id="${escapeHtml(product.id)}" data-variant-ram="${escapeHtml(product.ram)}" data-variant-storage="${escapeHtml(product.storage)}" data-variant-color="Midnight"${outOfStock ? " disabled" : ""}>Add to cart</button><button class="button button-coral" type="button" data-buy-now="${escapeHtml(product.id)}" data-variant-ram="${escapeHtml(product.ram)}" data-variant-storage="${escapeHtml(product.storage)}" data-variant-color="Midnight"${outOfStock ? " disabled" : ""}>Buy now</button></div>
-                <p class="detail-note">Price and base specifications are shown from the current product listing.</p>
+                <div class="detail-actions"><button class="button button-dark add-to-cart" type="button" data-product-id="${escapeHtml(product.id)}" data-variant-ram="${escapeHtml(vRam)}" data-variant-storage="${escapeHtml(vStorage)}" data-variant-color="Midnight"${outOfStock ? " disabled" : ""}>Add to cart</button><button class="button button-coral" type="button" data-buy-now="${escapeHtml(product.id)}" data-variant-ram="${escapeHtml(vRam)}" data-variant-storage="${escapeHtml(vStorage)}" data-variant-color="Midnight"${outOfStock ? " disabled" : ""}>Buy now</button></div>
+                <p class="detail-note">Price and specifications are shown from the current official product listing.</p>
             </div>
         </section>
-        <section class="detail-specs"><h2>Full specifications</h2><dl class="full-spec-list">
-            <div><dt>Brand</dt><dd>${escapeHtml(brandLabel(product.brand))}</dd></div><div><dt>Display</dt><dd>${escapeHtml(product.display)}</dd></div>
-            <div><dt>RAM</dt><dd>${escapeHtml(product.ram)}</dd></div><div><dt>Storage</dt><dd>${escapeHtml(product.storage)}</dd></div>
-            <div><dt>Processor</dt><dd>${escapeHtml(product.processor)}</dd></div><div><dt>Camera</dt><dd>${escapeHtml(product.camera)}</dd></div>
-            <div><dt>Battery</dt><dd>${escapeHtml(product.battery)}</dd></div><div><dt>Launch year</dt><dd>${escapeHtml(product.year)}</dd></div>
+        <section class="detail-specs"><h2>Specifications</h2><dl class="full-spec-list">
+            ${specsHtml}
         </dl></section>
-        <section class="review-section"><h2>Customer reviews</h2><div class="review-grid">${product.reviews.map((review) => `<article class="review-card"><p class="review-stars">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</p><p>${escapeHtml(review.text)}</p><strong>${escapeHtml(review.name)}</strong></article>`).join("")}</div></section>`;
+        <section class="review-section"><h2>Customer reviews</h2><div class="review-grid">${(product.reviews || []).map((review) => `<article class="review-card"><p class="review-stars">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</p><p>${escapeHtml(review.text)}</p><strong>${escapeHtml(review.name)}</strong></article>`).join("")}</div></section>`;
 
         wireImageFallbacks(target);
         const mainImage = target.querySelector(".detail-main-image img");
@@ -250,7 +357,7 @@
             });
         });
         const description = document.querySelector("[data-detail-title]");
-        if (description) description.textContent = `${product.model} specifications and price | MobileHub`;
+        if (description) description.textContent = `${product.model} (${category}) | MobileHub`;
     }
 
     document.querySelectorAll("[data-header-search]").forEach((form) => {
@@ -264,6 +371,13 @@
         link.addEventListener("click", (event) => {
             event.preventDefault();
             window.location.href = `Products.html?brand=${encodeURIComponent(link.dataset.brandLink)}`;
+        });
+    });
+    document.querySelectorAll("[data-category-nav-link]").forEach((link) => {
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            const cat = link.dataset.categoryNavLink;
+            window.location.href = `Products.html${cat ? `?category=${encodeURIComponent(cat)}` : ""}`;
         });
     });
     async function initializeStorefront() {

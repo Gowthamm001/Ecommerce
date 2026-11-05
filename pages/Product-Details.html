@@ -18,21 +18,51 @@
     <header class="site-header">
         <div class="header-top">
             <a class="brand" href="Home-Page.html" aria-label="MobileHub home"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a>
-            <form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="detail-search">Search smartphones</label><input id="detail-search" type="search" placeholder="Search phones, brands and models"><button type="submit" aria-label="Search">⌕</button></form>
+            <form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="detail-search">Search products</label><input id="detail-search" type="search" placeholder="Search mobiles, laptops, electronics and accessories"><button type="submit" aria-label="Search">⌕</button></form>
             <div class="header-actions"><a class="nav-cart" href="Cart.html">Cart <span class="cart-count" data-cart-count>0</span></a></div>
         </div>
-        <nav class="site-nav" aria-label="Main navigation"><a href="Home-Page.html">Home</a><a href="Products.html">All phones</a><a href="About.html">About</a><a href="Contact.html">Contact</a><a href="Login-Page.html">Login</a><a href="Register-Page.html">Register</a></nav>
-        <nav class="brand-nav" aria-label="Shop by brand"><a href="Products.html?brand=Apple" data-brand-link="Apple">Apple</a><a href="Products.html?brand=Samsung" data-brand-link="Samsung">Samsung</a><a href="Products.html?brand=OnePlus" data-brand-link="OnePlus">OnePlus</a><a href="Products.html?brand=Xiaomi" data-brand-link="Xiaomi">Xiaomi</a><a href="Products.html?brand=Xiaomi%20%28Redmi%29" data-brand-link="Xiaomi (Redmi)">Redmi</a><a href="Products.html?brand=Realme" data-brand-link="Realme">Realme</a><a href="Products.html?brand=Vivo" data-brand-link="Vivo">Vivo</a><a href="Products.html?brand=Oppo" data-brand-link="Oppo">Oppo</a><a href="Products.html?brand=iQOO" data-brand-link="iQOO">iQOO</a><a href="Products.html?brand=Google" data-brand-link="Google">Google</a><a href="Products.html?brand=Motorola" data-brand-link="Motorola">Motorola</a><a href="Products.html?brand=Nothing" data-brand-link="Nothing">Nothing</a></nav>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="Home-Page.html">Home</a>
+            <a href="Products.html">All products</a>
+            <a href="Products.html?category=Mobiles" data-category-nav-link="Mobiles">Mobiles</a>
+            <a href="Products.html?category=Laptops" data-category-nav-link="Laptops">Laptops</a>
+            <a href="Products.html?category=Electronics" data-category-nav-link="Electronics">Electronics</a>
+            <a href="Products.html?category=Accessories" data-category-nav-link="Accessories">Accessories</a>
+            <a href="About.html">About</a>
+            <a href="Contact.html">Contact</a>
+            <a href="Login-Page.html">Login</a>
+            <a href="Register-Page.html">Register</a>
+        </nav>
+        <nav class="brand-nav" aria-label="Shop by brand or category">
+            <a href="Products.html?category=Mobiles" class="nav-cat-pill" data-category-nav-link="Mobiles">📱 Mobiles</a>
+            <a href="Products.html?category=Laptops" class="nav-cat-pill" data-category-nav-link="Laptops">💻 Laptops</a>
+            <a href="Products.html?category=Electronics" class="nav-cat-pill" data-category-nav-link="Electronics">🎧 Electronics</a>
+            <a href="Products.html?category=Accessories" class="nav-cat-pill" data-category-nav-link="Accessories">⚡ Accessories</a>
+            <span class="nav-divider" aria-hidden="true">|</span>
+            <a href="Products.html?brand=Apple" data-brand-link="Apple">Apple</a>
+            <a href="Products.html?brand=Samsung" data-brand-link="Samsung">Samsung</a>
+            <a href="Products.html?brand=Dell" data-brand-link="Dell">Dell</a>
+            <a href="Products.html?brand=Lenovo" data-brand-link="Lenovo">Lenovo</a>
+            <a href="Products.html?brand=Sony" data-brand-link="Sony">Sony</a>
+            <a href="Products.html?brand=OnePlus" data-brand-link="OnePlus">OnePlus</a>
+        </nav>
     </header>
     <main class="page-shell details-page">
-        <p class="breadcrumbs"><a href="Home-Page.html">Home</a> / <a href="Products.html">Smartphones</a> / Product details</p>
         <div data-product-details><div class="loading-state">Loading product details…</div></div>
     </main>
     <footer class="site-footer">
-        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Find your next favourite phone.</p></div>
-        <div class="footer-links"><a href="About.html">About Us</a><a href="Contact.html">Contact</a><a href="Privacy-Policy.html">Privacy Policy</a></div>
+        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Your complete multi-category tech storefront.</p></div>
+        <div class="footer-links">
+            <a href="Products.html?category=Mobiles">Mobiles</a>
+            <a href="Products.html?category=Laptops">Laptops</a>
+            <a href="Products.html?category=Electronics">Electronics</a>
+            <a href="Products.html?category=Accessories">Accessories</a>
+            <a href="About.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="Privacy-Policy.html">Privacy Policy</a>
+        </div>
         <div class="footer-social"><span>Follow along</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook ↗</a><a href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube ↗</a></div>
-        <small>© 2026 MobileHub · Demo storefront</small>
+        <small>© 2026 MobileHub · Multi-Category Tech Store</small>
     </footer>
 </body>
 </html>

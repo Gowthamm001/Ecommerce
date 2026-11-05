@@ -32,6 +32,27 @@ class ProductCatalogServiceTest {
         assertEquals(32000, response.variants().get(1).price().intValue());
         assertEquals(3, response.colors().size());
         assertEquals(2, response.reviews().size());
+        assertEquals("Mobiles", response.category());
         assertTrue(response.description().contains("Test Phone"));
+    }
+
+    @Test
+    void mapsAccessoryProductsSafelyWithoutNumericRam() {
+        ProductRepository repository = mock(ProductRepository.class);
+        ProductInventoryRepository inventory = mock(ProductInventoryRepository.class);
+        Product accessory = new Product(
+                "test-headphones", "Sony", "WH-1000XM5", 29990, "N/A", "N/A",
+                "Touch Controls", "V1 + QN1", "4 mics", "30 hrs",
+                4.8, 2024, "https://example.com/headphones.jpg", "https://example.com/fallback.jpg",
+                "Accessories");
+        when(repository.findAll()).thenReturn(List.of(accessory));
+        ProductCatalogService service = new ProductCatalogService(repository, inventory);
+
+        ProductResponse response = service.findAll().get(0);
+
+        assertEquals("test-headphones", response.id());
+        assertEquals("Accessories", response.category());
+        assertEquals(1, response.variants().size());
+        assertEquals("Standard", response.variants().get(0).ram());
     }
 }

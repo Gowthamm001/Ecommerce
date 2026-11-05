@@ -57,8 +57,24 @@ class StorefrontApiIntegrationTest {
 
         mockMvc.perform(get("/api/products"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(29)))
+                .andExpect(jsonPath("$", hasSize(41)))
                 .andExpect(jsonPath("$[?(@.id == 'apple-iphone-17')].variants", hasSize(1)));
+
+        mockMvc.perform(get("/api/products").param("category", "Mobiles"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(29)));
+
+        mockMvc.perform(get("/api/products").param("category", "Laptops"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(4)));
+
+        mockMvc.perform(get("/api/products").param("category", "Electronics"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(4)));
+
+        mockMvc.perform(get("/api/products").param("category", "Accessories"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(4)));
 
         mockMvc.perform(get("/api/cart"))
                 .andExpect(status().isUnauthorized());
@@ -180,7 +196,7 @@ class StorefrontApiIntegrationTest {
         MockCookie adminCookie = registerAndSignIn("admin@example.test");
         mockMvc.perform(get("/api/admin/products").cookie(adminCookie))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(29)));
+                .andExpect(jsonPath("$", hasSize(41)));
 
         String product = """
                 {

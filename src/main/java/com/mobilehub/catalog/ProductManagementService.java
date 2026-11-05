@@ -40,10 +40,18 @@ public class ProductManagementService {
         if (products.existsById(request.id())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "A product with this ID already exists.");
         }
+        String category = defaultIfBlank(request.category(), "Mobiles");
+        String ram = defaultIfBlank(request.ram(), "N/A");
+        String storage = defaultIfBlank(request.storage(), "N/A");
+        String display = defaultIfBlank(request.display(), "N/A");
+        String processor = defaultIfBlank(request.processor(), "N/A");
+        String camera = defaultIfBlank(request.camera(), "N/A");
+        String battery = defaultIfBlank(request.battery(), "N/A");
+
         Product product = new Product(request.id(), request.brand(), request.model(), request.price(),
-                request.ram(), request.storage(), request.display(), request.processor(), request.camera(),
-                request.battery(), request.rating(), request.year(), request.image(),
-                blankToNull(request.fallbackImage()) == null ? request.image() : request.fallbackImage());
+                ram, storage, display, processor, camera, battery, request.rating(), request.year(), request.image(),
+                blankToNull(request.fallbackImage()) == null ? request.image() : request.fallbackImage(),
+                category);
         product = products.save(product);
         inventory.save(new ProductInventory(product, request.stock()));
         return catalog.findById(product.getId());
@@ -56,10 +64,20 @@ public class ProductManagementService {
         }
         Product product = products.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found."));
-        product.update(request.brand(), request.model(), request.price(), request.ram(), request.storage(),
-                request.display(), request.processor(), request.camera(), request.battery(),
+        String category = (request.category() == null || request.category().isBlank())
+                ? product.getCategory() : request.category().trim();
+        String ram = defaultIfBlank(request.ram(), product.getRam());
+        String storage = defaultIfBlank(request.storage(), product.getStorage());
+        String display = defaultIfBlank(request.display(), product.getDisplay());
+        String processor = defaultIfBlank(request.processor(), product.getProcessor());
+        String camera = defaultIfBlank(request.camera(), product.getCamera());
+        String battery = defaultIfBlank(request.battery(), product.getBattery());
+
+        product.update(request.brand(), request.model(), request.price(), ram, storage,
+                display, processor, camera, battery,
                 request.rating(), request.year(), request.image(),
-                blankToNull(request.fallbackImage()) == null ? request.image() : request.fallbackImage());
+                blankToNull(request.fallbackImage()) == null ? request.image() : request.fallbackImage(),
+                category);
         products.save(product);
         ProductInventory stock = inventory.lockByProductId(id)
                 .orElseGet(() -> new ProductInventory(product, 0));
@@ -85,21 +103,26 @@ public class ProductManagementService {
         return value == null || value.isBlank() ? null : value;
     }
 
+    private String defaultIfBlank(String value, String defaultValue) {
+        return value == null || value.isBlank() ? defaultValue : value.trim();
+    }
+
     public record ProductRequest(
             @NotBlank @Size(max = 255) @Pattern(regexp = "[A-Za-z0-9][A-Za-z0-9._-]*")
             String id,
             @NotBlank @Size(max = 255) String brand,
             @NotBlank @Size(max = 255) String model,
             @NotNull @DecimalMin("0.01") BigDecimal price,
-            @NotBlank @Size(max = 255) String ram,
-            @NotBlank @Size(max = 255) String storage,
-            @NotBlank @Size(max = 300) String display,
-            @NotBlank @Size(max = 200) String processor,
-            @NotBlank @Size(max = 300) String camera,
-            @NotBlank @Size(max = 255) String battery,
+            @Size(max = 255) String ram,
+            @Size(max = 255) String storage,
+            @Size(max = 300) String display,
+            @Size(max = 200) String processor,
+            @Size(max = 300) String camera,
+            @Size(max = 255) String battery,
             @Min(0) @Max(5) double rating,
             @Min(2000) @Max(2100) int year,
             @NotBlank @Size(max = 1000) String image,
             @Size(max = 1000) String fallbackImage,
-            @Min(0) int stock) { }
+            @Min(0) int stock,
+            @Size(max = 100) String category) { }
 }

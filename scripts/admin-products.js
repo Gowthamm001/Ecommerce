@@ -47,17 +47,22 @@
     }
 
     function renderProducts() {
-        const query = document.querySelector("[data-admin-search]").value.trim().toLowerCase();
-        const visible = products.filter((product) =>
-            `${product.id} ${product.brand} ${product.model}`.toLowerCase().includes(query));
+        const query = document.querySelector("[data-admin-search]")?.value.trim().toLowerCase() || "";
+        const categoryFilter = document.querySelector("[data-admin-filter-category]")?.value || "";
+        const visible = products.filter((product) => {
+            const cat = product.category || "Mobiles";
+            const matchesCat = !categoryFilter || cat.toLowerCase() === categoryFilter.toLowerCase();
+            const matchesSearch = !query || `${product.id} ${product.brand} ${product.model} ${cat}`.toLowerCase().includes(query);
+            return matchesCat && matchesSearch;
+        });
         document.querySelector("[data-admin-product-count]").textContent =
             `${visible.length} ${visible.length === 1 ? "product" : "products"}`;
         if (visible.length === 0) {
-            table.innerHTML = '<tr><td colspan="4">No products match your search.</td></tr>';
+            table.innerHTML = '<tr><td colspan="5">No products match your search.</td></tr>';
             return;
         }
         table.innerHTML = visible.map((product) =>
-            `<tr><td><strong>${escapeHtml(product.brand)} ${escapeHtml(product.model)}</strong><small>${escapeHtml(product.id)}</small></td><td>${currency.format(product.price)}</td><td>${Number(product.stock)}</td><td><div class="management-row-actions"><button class="button button-outline" type="button" data-edit-product="${escapeHtml(product.id)}">Edit</button><button class="button button-outline" type="button" data-delete-product="${escapeHtml(product.id)}">Delete</button></div></td></tr>`
+            `<tr><td><strong>${escapeHtml(product.brand)} ${escapeHtml(product.model)}</strong><small>${escapeHtml(product.id)}</small></td><td><span class="category-tag">${escapeHtml(product.category || "Mobiles")}</span></td><td>${currency.format(product.price)}</td><td>${Number(product.stock)}</td><td><div class="management-row-actions"><button class="button button-outline" type="button" data-edit-product="${escapeHtml(product.id)}">Edit</button><button class="button button-outline" type="button" data-delete-product="${escapeHtml(product.id)}">Delete</button></div></td></tr>`
         ).join("");
     }
 
@@ -69,6 +74,7 @@
     function resetForm() {
         editingId = null;
         form.reset();
+        if (form.elements.category) form.elements.category.value = "Mobiles";
         form.elements.stock.value = "0";
         form.elements.id.readOnly = false;
         document.querySelector("[data-product-form-title]").textContent = "Add a product";
@@ -82,6 +88,7 @@
                 field.value = product[field.name] ?? "";
             }
         }
+        if (form.elements.category) form.elements.category.value = product.category || "Mobiles";
         form.elements.id.readOnly = true;
         document.querySelector("[data-product-form-title]").textContent = `Edit ${product.model}`;
         form.querySelector('[type="submit"]').textContent = "Update product";
@@ -118,7 +125,8 @@
 
     document.querySelectorAll("[data-product-form-reset]").forEach((button) =>
         button.addEventListener("click", resetForm));
-    document.querySelector("[data-admin-search]").addEventListener("input", renderProducts);
+    document.querySelector("[data-admin-search]")?.addEventListener("input", renderProducts);
+    document.querySelector("[data-admin-filter-category]")?.addEventListener("change", renderProducts);
     table.addEventListener("click", async (event) => {
         const button = event.target.closest("button");
         if (!button) return;
@@ -154,7 +162,7 @@
         } catch (error) {
             console.error("Could not open product management.", error);
             showStatus(error.message, true);
-            table.innerHTML = `<tr><td colspan="4">${escapeHtml(error.message)} <a href="Login-Page.html">Sign in</a></td></tr>`;
+            table.innerHTML = `<tr><td colspan="5">${escapeHtml(error.message)} <a href="Login-Page.html">Sign in</a></td></tr>`;
         }
     })();
 })();

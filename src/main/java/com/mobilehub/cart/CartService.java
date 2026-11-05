@@ -57,7 +57,7 @@ public class CartService {
                 account, product.getId(), ram, storage, color).orElse(null);
         if (item == null) {
             if (stock.getStock() < 1) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "This phone is currently out of stock.");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "This product is currently out of stock.");
             }
             cartItems.save(new CartItem(account, product, ram, storage, color, price));
         } else if (item.getQuantity() >= stock.getStock()) {
@@ -168,15 +168,27 @@ public class CartService {
     }
 
     private BigDecimal configurationPrice(Product product, String ram, String storage, String color) {
-        int ramNumber = Integer.parseInt(product.getRam().split(" ")[0]);
-        String secondRam = ramNumber < 12 ? "12 GB" : "16 GB";
-        String secondStorage = product.getStorage().equals("512 GB") ? "1 TB" : "512 GB";
-        boolean baseVariant = product.getRam().equals(ram) && product.getStorage().equals(storage);
-        boolean upgradedVariant = secondRam.equals(ram) && secondStorage.equals(storage);
-        if ((!baseVariant && !upgradedVariant) || !COLORS.contains(color)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Choose an available phone configuration.");
+        String pRam = product.getRam() == null ? "" : product.getRam().trim();
+        String pStorage = product.getStorage() == null ? "" : product.getStorage().trim();
+
+        if (pRam.matches("^\\d+\\s*GB.*")) {
+            int ramNumber = Integer.parseInt(pRam.split("\\s+")[0]);
+            String secondRam = ramNumber < 12 ? "12 GB" : (ramNumber < 16 ? "16 GB" : (ramNumber < 32 ? "32 GB" : "64 GB"));
+            String secondStorage = "512 GB".equalsIgnoreCase(pStorage) ? "1 TB"
+                    : ("1 TB".equalsIgnoreCase(pStorage) ? "2 TB" : "512 GB");
+
+            boolean baseVariant = (ram == null || ram.isBlank() || ram.equalsIgnoreCase(pRam) || "Standard".equalsIgnoreCase(ram))
+                    && (storage == null || storage.isBlank() || storage.equalsIgnoreCase(pStorage) || "Standard".equalsIgnoreCase(storage));
+            boolean upgradedVariant = secondRam.equalsIgnoreCase(ram) && secondStorage.equalsIgnoreCase(storage);
+
+            if (upgradedVariant) {
+                return product.getPrice().add(BigDecimal.valueOf(7000));
+            }
+            if (baseVariant) {
+                return product.getPrice();
+            }
         }
-        return baseVariant ? product.getPrice() : product.getPrice().add(BigDecimal.valueOf(7000));
+        return product.getPrice();
     }
 
     private record CartKey(String productId, String ram, String storage, String color) { }
@@ -199,15 +211,28 @@ public class CartService {
     }
 
     private CartResponse response(List<CartItem> items) {
-        List<CartResponse.Item> rows = items.stream().map(item -> new CartResponse.Item(
-                item.getId(),
-                item.getProduct().getId(),
-                item.getProduct().getBrand() + " " + item.getProduct().getModel() + " · "
-                        + item.getVariantRam() + " / " + item.getVariantStorage() + " · " + item.getColor(),
-                item.getUnitPrice(),
-                item.getProduct().getImage(),
-                item.getProduct().getFallbackImage(),
-                item.getQuantity())).toList();
+        List<CartResponse.Item> rows = items.stream().map(item -> {
+            String name;
+            String vRam = item.getVariantRam();
+            String vStorage = item.getVariantStorage();
+            boolean hasSpecs = vRam != null && !vRam.isBlank() && !"N/A".equalsIgnoreCase(vRam) && !"Standard".equalsIgnoreCase(vRam);
+            if (hasSpecs) {
+                name = item.getProduct().getBrand() + " " + item.getProduct().getModel() + " · "
+                        + vRam + " / " + vStorage + " · " + item.getColor();
+            } else if (item.getColor() != null && !item.getColor().isBlank() && !"Standard".equalsIgnoreCase(item.getColor())) {
+                name = item.getProduct().getBrand() + " " + item.getProduct().getModel() + " · " + item.getColor();
+            } else {
+                name = item.getProduct().getBrand() + " " + item.getProduct().getModel();
+            }
+            return new CartResponse.Item(
+                    item.getId(),
+                    item.getProduct().getId(),
+                    name,
+                    item.getUnitPrice(),
+                    item.getProduct().getImage(),
+                    item.getProduct().getFallbackImage(),
+                    item.getQuantity());
+        }).toList();
         int count = items.stream().mapToInt(CartItem::getQuantity).sum();
         BigDecimal subtotal = items.stream()
                 .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))

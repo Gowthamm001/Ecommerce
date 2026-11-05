@@ -549,3 +549,267 @@ body { background: #fff; color: #172f4a; }
     .management-row-actions { flex-direction: column; }
     .management-row-actions .button { min-height: 34px; padding: 0 8px; font-size: 10px; }
 }
+
+/* ==========================================================================
+   Multi-Category E-Commerce Extensions (MobileHub Upgrade)
+   ========================================================================== */
+
+/* Category Showcase Grid (Home Page) */
+.category-showcase { padding: 36px 0 20px; }
+.category-showcase .section-header { margin-bottom: 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.section-kicker { margin: 0 0 6px; color: #1673c9; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+.category-showcase h2 { margin: 0; font-size: clamp(23px, 3vw, 30px); letter-spacing: -.5px; color: #183957; }
+.inline-link { color: #126cba; font-size: 13px; font-weight: 700; text-decoration: none; }
+.inline-link:hover { text-decoration: underline; }
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.category-banner-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    text-decoration: none;
+    color: #183957;
+    transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    box-shadow: 0 6px 20px rgb(25 61 95 / 5%);
+}
+
+.category-banner-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgb(25 61 95 / 12%);
+}
+
+.cat-card-mobiles {
+    background: linear-gradient(145deg, #f0f7ff, #e3effe);
+    border-color: #c9e0fa;
+}
+.cat-card-mobiles:hover { border-color: #1673c9; }
+
+.cat-card-laptops {
+    background: linear-gradient(145deg, #f5f3ff, #ede9fe);
+    border-color: #ddd6fe;
+}
+.cat-card-laptops:hover { border-color: #7c3aed; }
+
+.cat-card-electronics {
+    background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+    border-color: #bbf7d0;
+}
+.cat-card-electronics:hover { border-color: #16a34a; }
+
+.cat-card-accessories {
+    background: linear-gradient(145deg, #fff7ed, #ffedd5);
+    border-color: #fed7aa;
+}
+.cat-card-accessories:hover { border-color: #ea580c; }
+
+.cat-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.cat-card-icon {
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 12px;
+}
+
+.cat-tag {
+    align-self: flex-start;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 85%);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #52677d;
+    margin-bottom: 8px;
+}
+
+.category-banner-card h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #183957;
+}
+
+.category-banner-card p {
+    margin: 0 0 14px;
+    font-size: 12px;
+    color: #526882;
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+.cat-action {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1673c9;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 160ms ease;
+}
+
+.category-banner-card:hover .cat-action {
+    gap: 8px;
+}
+
+/* Category Pills Filter Bar (Storefront Catalog / Products Page) */
+.category-pills-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 24px;
+    align-items: center;
+}
+
+.category-pill-btn {
+    padding: 9px 18px;
+    border: 1px solid #dbe5ef;
+    border-radius: 999px;
+    background: #fff;
+    color: #254663;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.category-pill-btn:hover {
+    border-color: #1673c9;
+    background: #f0f7ff;
+    color: #1673c9;
+}
+
+.category-pill-btn.is-active {
+    background: #1673c9;
+    border-color: #1673c9;
+    color: #fff;
+    box-shadow: 0 4px 14px rgb(22 115 201 / 25%);
+}
+
+.category-pill-btn:focus-visible {
+    outline: 3px solid rgb(22 115 201 / 32%);
+    outline-offset: 2px;
+}
+
+/* Product Card Category Badges */
+.card-category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgb(255 255 255 / 92%);
+    color: #1673c9;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+    backdrop-filter: blur(4px);
+}
+
+/* Product Detail Category Tag & Breadcrumb */
+.category-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #eaf5ff;
+    color: #1265a8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    margin-right: 8px;
+}
+
+.detail-category-row {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Admin Management Controls */
+.admin-filter-bar {
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.management-category-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #52677d;
+}
+
+.management-category-filter select,
+.product-management-form select {
+    min-height: 42px;
+    padding: 8px 12px;
+    border: 1px solid #d3dee9;
+    border-radius: 6px;
+    color: #294762;
+    font-size: 13px;
+    background: #fff;
+    outline: 0;
+}
+
+.management-category-filter select:focus,
+.product-management-form select:focus {
+    outline: 2px solid rgb(22 115 201 / 23%);
+    border-color: #1673c9;
+}
+
+.site-nav .nav-divider {
+    width: 1px;
+    height: 16px;
+    background: rgb(255 255 255 / 22%);
+    margin: 0 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1050px) {
+    .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 580px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+    .category-pills-bar {
+        gap: 6px;
+    }
+    .category-pill-btn {
+        padding: 7px 12px;
+        font-size: 12px;
+    }
+}

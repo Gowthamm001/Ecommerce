@@ -26,8 +26,10 @@ public class ProductAdminController {
     }
 
     @GetMapping
-    public List<ProductResponse> products(@RequestParam(required = false) String q) {
-        return catalog.findAll(q);
+    public List<ProductResponse> products(
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String category) {
+        return catalog.findAll(q, category);
     }
 
     @PostMapping

@@ -90,7 +90,7 @@
         if (items.length === 0) {
             const empty = document.createElement("div");
             empty.className = "empty-cart";
-            empty.innerHTML = '<span aria-hidden="true">▢</span><h3>Your cart is empty.</h3><p>Explore the phones and add one when you find your match.</p><a class="button button-dark" href="Products.html">Explore phones</a>';
+            empty.innerHTML = '<span aria-hidden="true">▢</span><h3>Your cart is empty.</h3><p>Explore our products and add items to your cart.</p><a class="button button-dark" href="Products.html">Explore products</a>';
             itemList.append(empty);
             return;
         }

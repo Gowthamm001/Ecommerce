@@ -26,7 +26,7 @@
         }
         const orders = await response.json();
         if (orders.length === 0) {
-            container.innerHTML = '<div class="empty-cart"><h2>No orders yet</h2><p>Your placed orders will appear here.</p><a class="button button-dark" href="Products.html">Browse phones</a></div>';
+            container.innerHTML = '<div class="empty-cart"><h2>No orders yet</h2><p>Your placed orders will appear here.</p><a class="button button-dark" href="Products.html">Browse products</a></div>';
             return;
         }
         container.innerHTML = orders.map((order) => {

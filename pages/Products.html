@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#12345a">
-    <title>Shop Smartphones | MobileHub</title>
+    <title>Shop Products & Electronics | MobileHub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -18,37 +18,85 @@
     <header class="site-header">
         <div class="header-top">
             <a class="brand" href="Home-Page.html" aria-label="MobileHub home"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a>
-            <form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="products-search">Search smartphones</label><input id="products-search" type="search" placeholder="Search phones, brands and models"><button type="submit" aria-label="Search">⌕</button></form>
+            <form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="products-search">Search products</label><input id="products-search" type="search" placeholder="Search mobiles, laptops, electronics and accessories"><button type="submit" aria-label="Search">⌕</button></form>
             <div class="header-actions"><a class="nav-cart" href="Cart.html">Cart <span class="cart-count" data-cart-count>0</span></a></div>
         </div>
-        <nav class="site-nav" aria-label="Main navigation"><a href="Home-Page.html">Home</a><a href="Products.html" aria-current="page">All phones</a><a href="About.html">About</a><a href="Contact.html">Contact</a><a href="Login-Page.html">Login</a><a href="Register-Page.html">Register</a></nav>
-        <nav class="brand-nav" aria-label="Shop by brand"><a href="Products.html?brand=Apple" data-brand-link="Apple">Apple</a><a href="Products.html?brand=Samsung" data-brand-link="Samsung">Samsung</a><a href="Products.html?brand=OnePlus" data-brand-link="OnePlus">OnePlus</a><a href="Products.html?brand=Xiaomi" data-brand-link="Xiaomi">Xiaomi</a><a href="Products.html?brand=Xiaomi%20%28Redmi%29" data-brand-link="Xiaomi (Redmi)">Redmi</a><a href="Products.html?brand=Realme" data-brand-link="Realme">Realme</a><a href="Products.html?brand=Vivo" data-brand-link="Vivo">Vivo</a><a href="Products.html?brand=Oppo" data-brand-link="Oppo">Oppo</a><a href="Products.html?brand=iQOO" data-brand-link="iQOO">iQOO</a><a href="Products.html?brand=Google" data-brand-link="Google">Google</a><a href="Products.html?brand=Motorola" data-brand-link="Motorola">Motorola</a><a href="Products.html?brand=Nothing" data-brand-link="Nothing">Nothing</a></nav>
+        <nav class="site-nav" aria-label="Main navigation">
+            <a href="Home-Page.html">Home</a>
+            <a href="Products.html" aria-current="page">All products</a>
+            <a href="Products.html?category=Mobiles" data-category-nav-link="Mobiles">Mobiles</a>
+            <a href="Products.html?category=Laptops" data-category-nav-link="Laptops">Laptops</a>
+            <a href="Products.html?category=Electronics" data-category-nav-link="Electronics">Electronics</a>
+            <a href="Products.html?category=Accessories" data-category-nav-link="Accessories">Accessories</a>
+            <a href="About.html">About</a>
+            <a href="Contact.html">Contact</a>
+            <a href="Login-Page.html">Login</a>
+            <a href="Register-Page.html">Register</a>
+        </nav>
+        <nav class="brand-nav" aria-label="Shop by brand or category">
+            <a href="Products.html?category=Mobiles" class="nav-cat-pill" data-category-nav-link="Mobiles">📱 Mobiles</a>
+            <a href="Products.html?category=Laptops" class="nav-cat-pill" data-category-nav-link="Laptops">💻 Laptops</a>
+            <a href="Products.html?category=Electronics" class="nav-cat-pill" data-category-nav-link="Electronics">🎧 Electronics</a>
+            <a href="Products.html?category=Accessories" class="nav-cat-pill" data-category-nav-link="Accessories">⚡ Accessories</a>
+            <span class="nav-divider" aria-hidden="true">|</span>
+            <a href="Products.html?brand=Apple" data-brand-link="Apple">Apple</a>
+            <a href="Products.html?brand=Samsung" data-brand-link="Samsung">Samsung</a>
+            <a href="Products.html?brand=Dell" data-brand-link="Dell">Dell</a>
+            <a href="Products.html?brand=Lenovo" data-brand-link="Lenovo">Lenovo</a>
+            <a href="Products.html?brand=Sony" data-brand-link="Sony">Sony</a>
+            <a href="Products.html?brand=OnePlus" data-brand-link="OnePlus">OnePlus</a>
+            <a href="Products.html?brand=Logitech" data-brand-link="Logitech">Logitech</a>
+            <a href="Products.html?brand=Google" data-brand-link="Google">Google</a>
+        </nav>
     </header>
     <main class="page-shell catalog-page">
-        <section class="page-intro catalog-intro"><p class="eyebrow">THE MOBILEHUB COLLECTION</p><h1>Find your next<br><span>smartphone.</span></h1><p>Compare specifications, filter by the details that matter, and shop across leading brands.</p></section>
-        <section class="catalog" aria-label="Smartphone catalogue">
+        <section class="page-intro catalog-intro">
+            <p class="eyebrow">THE COMPLETE COLLECTION</p>
+            <h1>Find your next<br><span>tech upgrade.</span></h1>
+            <p>Compare specifications, filter by category or hardware details, and shop across leading brands in Mobiles, Laptops, Electronics, and Accessories.</p>
+        </section>
+
+        <!-- Category Filter Pills Bar -->
+        <div class="category-pills-bar" role="tablist" aria-label="Select product category">
+            <button type="button" class="category-pill-btn is-active" data-category-pill="" role="tab" aria-selected="true">All Categories</button>
+            <button type="button" class="category-pill-btn" data-category-pill="Mobiles" role="tab" aria-selected="false">📱 Mobiles</button>
+            <button type="button" class="category-pill-btn" data-category-pill="Laptops" role="tab" aria-selected="false">💻 Laptops</button>
+            <button type="button" class="category-pill-btn" data-category-pill="Electronics" role="tab" aria-selected="false">🎧 Electronics</button>
+            <button type="button" class="category-pill-btn" data-category-pill="Accessories" role="tab" aria-selected="false">⚡ Accessories</button>
+        </div>
+
+        <section class="catalog" aria-label="Product catalogue">
             <div class="catalog-toolbar">
-                <div class="catalog-heading"><h2>All smartphones</h2><span data-results-count aria-live="polite">Loading phones…</span></div>
+                <div class="catalog-heading"><h2>All products</h2><span data-results-count aria-live="polite">Loading products…</span></div>
                 <div class="filter-grid" aria-label="Filter and sort products">
-                    <label class="catalog-search">Search<input type="search" data-catalog-search placeholder="Model or brand"></label>
+                    <label class="catalog-search">Search<input type="search" data-catalog-search placeholder="Search by name, model, brand"></label>
+                    <label>Category<select data-filter-category><option value="">All categories</option><option value="Mobiles">Mobiles</option><option value="Laptops">Laptops</option><option value="Electronics">Electronics</option><option value="Accessories">Accessories</option></select></label>
                     <label>Brand<select data-filter-brand><option value="">All brands</option></select></label>
                     <label>Min price (₹)<input type="number" min="0" step="1" inputmode="numeric" data-filter-min-price placeholder="No minimum"></label>
                     <label>Max price (₹)<input type="number" min="0" step="1" inputmode="numeric" data-filter-max-price placeholder="No maximum"></label>
-                    <label>RAM<select data-filter-ram><option value="">Any RAM</option><option value="6">6 GB and above</option><option value="8">8 GB and above</option><option value="12">12 GB and above</option><option value="16">16 GB and above</option></select></label>
-                    <label>Storage<select data-filter-storage><option value="">Any storage</option><option value="128">128 GB and above</option><option value="256">256 GB and above</option><option value="512">512 GB and above</option></select></label>
+                    <label>RAM<select data-filter-ram><option value="">Any RAM</option><option value="6">6 GB and above</option><option value="8">8 GB and above</option><option value="12">12 GB and above</option><option value="16">16 GB and above</option><option value="32">32 GB and above</option></select></label>
+                    <label>Storage<select data-filter-storage><option value="">Any storage</option><option value="128">128 GB and above</option><option value="256">256 GB and above</option><option value="512">512 GB and above</option><option value="1024">1 TB and above</option></select></label>
                     <label>Camera<select data-filter-camera><option value="">Any camera</option><option value="50">50 MP and above</option><option value="100">100 MP and above</option><option value="200">200 MP and above</option></select></label>
                     <label>Sort by<select data-filter-sort><option value="featured">Featured</option><option value="price-low">Lowest price</option><option value="price-high">Highest price</option><option value="newest">Newest arrivals</option><option value="rated">Highest rated</option></select></label>
                     <button class="clear-filters" type="button" data-clear-filters>Clear filters</button>
                 </div>
             </div>
-            <div class="product-grid catalog-product-grid" data-product-grid aria-live="polite"><p class="loading-state" role="status">Loading smartphones…</p></div>
+            <div class="product-grid catalog-product-grid" data-product-grid aria-live="polite"><p class="loading-state" role="status">Loading products…</p></div>
         </section>
     </main>
     <footer class="site-footer">
-        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Find your next favourite phone.</p></div>
-        <div class="footer-links"><a href="About.html">About Us</a><a href="Contact.html">Contact</a><a href="Privacy-Policy.html">Privacy Policy</a></div>
+        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Your complete multi-category tech storefront.</p></div>
+        <div class="footer-links">
+            <a href="Products.html?category=Mobiles">Mobiles</a>
+            <a href="Products.html?category=Laptops">Laptops</a>
+            <a href="Products.html?category=Electronics">Electronics</a>
+            <a href="Products.html?category=Accessories">Accessories</a>
+            <a href="About.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="Privacy-Policy.html">Privacy Policy</a>
+        </div>
         <div class="footer-social"><span>Follow along</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook ↗</a><a href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube ↗</a></div>
-        <small>© 2026 MobileHub · Demo storefront</small>
+        <small>© 2026 MobileHub · Multi-Category Tech Store</small>
     </footer>
 </body>
 </html>

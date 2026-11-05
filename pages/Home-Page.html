@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#12345a">
-    <title>MobileHub | Smartphones picked for you</title>
+    <title>MobileHub | Mobiles, Laptops, Electronics & Accessories</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -19,62 +19,185 @@
         <div class="header-top">
             <a class="brand" href="Home-Page.html" aria-label="MobileHub home"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a>
             <form class="header-search" data-header-search action="Products.html" role="search">
-                <label class="sr-only" for="home-search">Search smartphones</label>
-                <input id="home-search" type="search" placeholder="Search phones, brands and models">
+                <label class="sr-only" for="home-search">Search products</label>
+                <input id="home-search" type="search" placeholder="Search mobiles, laptops, electronics and accessories">
                 <button type="submit" aria-label="Search">⌕</button>
             </form>
             <div class="header-actions"><a class="nav-cart" href="Cart.html" aria-label="Shopping cart">Cart <span class="cart-count" data-cart-count>0</span></a></div>
         </div>
         <nav class="site-nav" aria-label="Main navigation">
-            <a href="Home-Page.html" aria-current="page">Home</a><a href="Products.html">All phones</a><a href="About.html">About</a><a href="Contact.html">Contact</a><a href="Login-Page.html">Login</a><a href="Register-Page.html">Register</a>
+            <a href="Home-Page.html" aria-current="page">Home</a>
+            <a href="Products.html">All products</a>
+            <a href="Products.html?category=Mobiles" data-category-nav-link="Mobiles">Mobiles</a>
+            <a href="Products.html?category=Laptops" data-category-nav-link="Laptops">Laptops</a>
+            <a href="Products.html?category=Electronics" data-category-nav-link="Electronics">Electronics</a>
+            <a href="Products.html?category=Accessories" data-category-nav-link="Accessories">Accessories</a>
+            <a href="About.html">About</a>
+            <a href="Contact.html">Contact</a>
+            <a href="Login-Page.html">Login</a>
+            <a href="Register-Page.html">Register</a>
         </nav>
-        <nav class="brand-nav" aria-label="Shop by brand">
-            <a href="Products.html?brand=Apple" data-brand-link="Apple">Apple</a><a href="Products.html?brand=Samsung" data-brand-link="Samsung">Samsung</a><a href="Products.html?brand=OnePlus" data-brand-link="OnePlus">OnePlus</a><a href="Products.html?brand=Xiaomi" data-brand-link="Xiaomi">Xiaomi</a><a href="Products.html?brand=Xiaomi%20%28Redmi%29" data-brand-link="Xiaomi (Redmi)">Redmi</a><a href="Products.html?brand=Realme" data-brand-link="Realme">Realme</a><a href="Products.html?brand=Vivo" data-brand-link="Vivo">Vivo</a><a href="Products.html?brand=Oppo" data-brand-link="Oppo">Oppo</a><a href="Products.html?brand=iQOO" data-brand-link="iQOO">iQOO</a><a href="Products.html?brand=Google" data-brand-link="Google">Google</a><a href="Products.html?brand=Motorola" data-brand-link="Motorola">Motorola</a><a href="Products.html?brand=Nothing" data-brand-link="Nothing">Nothing</a>
+        <nav class="brand-nav" aria-label="Shop by brand or category">
+            <a href="Products.html?category=Mobiles" class="nav-cat-pill" data-category-nav-link="Mobiles">📱 Mobiles</a>
+            <a href="Products.html?category=Laptops" class="nav-cat-pill" data-category-nav-link="Laptops">💻 Laptops</a>
+            <a href="Products.html?category=Electronics" class="nav-cat-pill" data-category-nav-link="Electronics">🎧 Electronics</a>
+            <a href="Products.html?category=Accessories" class="nav-cat-pill" data-category-nav-link="Accessories">⚡ Accessories</a>
+            <span class="nav-divider" aria-hidden="true">|</span>
+            <a href="Products.html?brand=Apple" data-brand-link="Apple">Apple</a>
+            <a href="Products.html?brand=Samsung" data-brand-link="Samsung">Samsung</a>
+            <a href="Products.html?brand=Dell" data-brand-link="Dell">Dell</a>
+            <a href="Products.html?brand=Lenovo" data-brand-link="Lenovo">Lenovo</a>
+            <a href="Products.html?brand=Sony" data-brand-link="Sony">Sony</a>
+            <a href="Products.html?brand=OnePlus" data-brand-link="OnePlus">OnePlus</a>
+            <a href="Products.html?brand=Google" data-brand-link="Google">Google</a>
+            <a href="Products.html?brand=Logitech" data-brand-link="Logitech">Logitech</a>
         </nav>
     </header>
 
     <main>
         <section class="home-hero">
-            <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=85" aria-label="Background video showcasing smartphones">
+            <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=1000&q=85" aria-label="Background video showcasing technology products">
                 <source src="../bg-video.mp4" type="video/mp4">
             </video>
             <div class="hero-copy">
-                <p class="eyebrow">YOUR NEXT PHONE, FOUND</p>
-                <h1>Find the phone<br>that feels <span>like you.</span></h1>
-                <p>Explore the latest from the brands you love, with clear specs and prices.</p>
-                <a class="button button-coral" href="Products.html">Explore all phones <span aria-hidden="true">→</span></a>
-                <small>Browse product records, compare specifications, and find your next phone.</small>
+                <p class="eyebrow">MULTI-CATEGORY TECH HUB</p>
+                <h1>Tech that fits<br>the way <span>you live.</span></h1>
+                <p>Explore flagships, powerful laptops, immersive electronics, and essential accessories with verified specs and clear INR pricing.</p>
+                <div class="hero-actions">
+                    <a class="button button-coral" href="Products.html">Shop All Products <span aria-hidden="true">→</span></a>
+                    <a class="button button-outline hero-secondary-btn" href="#category-showcase">Explore Categories <span aria-hidden="true">↓</span></a>
+                </div>
+                <small>Authentic inventory · Real-time stock · Safe delivery across India</small>
             </div>
         </section>
 
+        <!-- Category Showcase Banners Section -->
+        <section id="category-showcase" class="category-showcase content-width" aria-labelledby="category-showcase-title">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">EXPLORE BY CATEGORY</p>
+                    <h2 id="category-showcase-title">Shop our 4 departments</h2>
+                </div>
+                <a href="Products.html">View complete catalog <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="category-grid">
+                <article class="category-banner-card cat-card-mobiles" data-category-card="Mobiles">
+                    <div class="cat-card-overlay"></div>
+                    <div class="cat-card-content">
+                        <span class="cat-card-icon">📱</span>
+                        <span class="cat-tag">Popular department</span>
+                        <h3>Mobiles</h3>
+                        <p>Flagship phones, ultra-smooth displays, and pro-grade cameras from Apple, Samsung, OnePlus & more.</p>
+                        <span class="cat-action">Shop Mobiles →</span>
+                    </div>
+                </article>
+
+                <article class="category-banner-card cat-card-laptops" data-category-card="Laptops">
+                    <div class="cat-card-overlay"></div>
+                    <div class="cat-card-content">
+                        <span class="cat-card-icon">💻</span>
+                        <span class="cat-tag">Productivity & Gaming</span>
+                        <h3>Laptops</h3>
+                        <p>High-performance MacBooks, OLED ultrabooks, and elite gaming rigs from Dell, Lenovo, Apple & ASUS.</p>
+                        <span class="cat-action">Shop Laptops →</span>
+                    </div>
+                </article>
+
+                <article class="category-banner-card cat-card-electronics" data-category-card="Electronics">
+                    <div class="cat-card-overlay"></div>
+                    <div class="cat-card-content">
+                        <span class="cat-card-icon">🎧</span>
+                        <span class="cat-tag">Audio & Smart Tech</span>
+                        <h3>Electronics</h3>
+                        <p>Industry-leading noise-cancelling headphones, 5K monitors, iPads, and next-gen smartwatches.</p>
+                        <span class="cat-action">Shop Electronics →</span>
+                    </div>
+                </article>
+
+                <article class="category-banner-card cat-card-accessories" data-category-card="Accessories">
+                    <div class="cat-card-overlay"></div>
+                    <div class="cat-card-content">
+                        <span class="cat-card-icon">⚡</span>
+                        <span class="cat-tag">Essentials & Gear</span>
+                        <h3>Accessories</h3>
+                        <p>Fast GaN chargers, ergonomic wireless mice, MagSafe wallets, and military-grade drop cases.</p>
+                        <span class="cat-action">Shop Accessories →</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Brand shortcuts -->
         <section class="brand-shortcuts content-width" aria-labelledby="brand-shortcuts-title">
-            <div><p class="eyebrow">SHOP YOUR WAY</p><h2 id="brand-shortcuts-title">Brands worth knowing</h2></div>
+            <div><p class="eyebrow">SHOP YOUR WAY</p><h2 id="brand-shortcuts-title">Featured Tech Brands</h2></div>
             <div class="popular-brand-grid" data-popular-brands aria-live="polite"><p class="loading-state">Loading brands…</p></div>
         </section>
 
+        <!-- Mobiles Section -->
         <section class="home-section content-width" aria-labelledby="featured-title">
-            <div class="section-heading"><div><p class="eyebrow">HANDPICKED FOR YOU</p><h2 id="featured-title">Featured smartphones</h2></div><a href="Products.html">Shop all phones <span aria-hidden="true">→</span></a></div>
-            <div class="product-grid home-product-grid" data-home-featured><p class="loading-state" role="status">Loading featured phones…</p></div>
+            <div class="section-heading">
+                <div><p class="eyebrow">HANDPICKED SMARTPHONES</p><h2 id="featured-title">Featured Mobiles</h2></div>
+                <a href="Products.html?category=Mobiles">View all mobiles <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="product-grid home-product-grid" data-home-featured><p class="loading-state" role="status">Loading featured mobiles…</p></div>
         </section>
-        <section class="home-section content-width" aria-labelledby="trending-title">
-            <div class="section-heading"><div><p class="eyebrow">MAKING THEIR MARK</p><h2 id="trending-title">Trending smartphones</h2></div><a href="Products.html?sort=newest">Explore trending phones <span aria-hidden="true">→</span></a></div>
-            <div class="product-grid home-product-grid" data-home-trending><p class="loading-state" role="status">Loading trending phones…</p></div>
+
+        <!-- Laptops Section -->
+        <section class="home-section content-width" aria-labelledby="laptops-title">
+            <div class="section-heading">
+                <div><p class="eyebrow">COMPUTING & PRODUCTIVITY</p><h2 id="laptops-title">Top Laptops</h2></div>
+                <a href="Products.html?category=Laptops">View all laptops <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="product-grid home-product-grid" data-home-laptops><p class="loading-state" role="status">Loading laptops…</p></div>
         </section>
+
+        <!-- Electronics Section -->
+        <section class="home-section content-width" aria-labelledby="electronics-title">
+            <div class="section-heading">
+                <div><p class="eyebrow">AUDIO & CONNECTED TECH</p><h2 id="electronics-title">Must-Have Electronics</h2></div>
+                <a href="Products.html?category=Electronics">View all electronics <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="product-grid home-product-grid" data-home-electronics><p class="loading-state" role="status">Loading electronics…</p></div>
+        </section>
+
+        <!-- Accessories Section -->
+        <section class="home-section content-width" aria-labelledby="accessories-title">
+            <div class="section-heading">
+                <div><p class="eyebrow">CHARGERS, AUDIO & CASES</p><h2 id="accessories-title">Trending Accessories</h2></div>
+                <a href="Products.html?category=Accessories">View all accessories <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="product-grid home-product-grid" data-home-accessories><p class="loading-state" role="status">Loading accessories…</p></div>
+        </section>
+
+        <!-- Value Picks -->
         <section class="home-section content-width" aria-labelledby="deals-title">
-            <div class="section-heading"><div><p class="eyebrow">SMART PICKS, CLEAR PRICES</p><h2 id="deals-title">Best-value phones</h2></div><a href="Products.html?maxPrice=50000">Browse phones under ₹50,000 <span aria-hidden="true">→</span></a></div>
+            <div class="section-heading">
+                <div><p class="eyebrow">SMART PICKS, CLEAR PRICES</p><h2 id="deals-title">Great Value Tech Under ₹50,000</h2></div>
+                <a href="Products.html?maxPrice=50000">Browse all value picks <span aria-hidden="true">→</span></a>
+            </div>
             <div class="product-grid home-product-grid" data-home-deals><p class="loading-state" role="status">Loading value picks…</p></div>
         </section>
+
         <section class="newsletter content-width" aria-labelledby="newsletter-title">
-            <div><p class="eyebrow">THE MOBILEHUB NEWSLETTER</p><h2 id="newsletter-title">Good phones. Good updates.</h2><p>Get in touch to hear about new arrivals, product guides, and special picks.</p></div>
+            <div><p class="eyebrow">THE MOBILEHUB NEWSLETTER</p><h2 id="newsletter-title">Stay ahead of the tech curve.</h2><p>Get in touch to hear about new arrivals, category launches, and exclusive member deals.</p></div>
             <a class="button button-dark" href="Contact.html">Ask about updates <span aria-hidden="true">→</span></a>
         </section>
-        <section class="price-notice content-width"><strong>Prices from product listings</strong><p>Prices are displayed in Indian Rupees from the current product records. Final availability and seller pricing may vary.</p></section>
+
+        <section class="price-notice content-width"><strong>Prices from product listings</strong><p>Prices are displayed in Indian Rupees from current product records. All products include manufacturer warranty and standard return policies.</p></section>
     </main>
     <footer class="site-footer">
-        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Find your next favourite phone.</p></div>
-        <div class="footer-links"><a href="About.html">About Us</a><a href="Contact.html">Contact</a><a href="Privacy-Policy.html">Privacy Policy</a></div>
+        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Your complete multi-category tech storefront.</p></div>
+        <div class="footer-links">
+            <a href="Products.html?category=Mobiles">Mobiles</a>
+            <a href="Products.html?category=Laptops">Laptops</a>
+            <a href="Products.html?category=Electronics">Electronics</a>
+            <a href="Products.html?category=Accessories">Accessories</a>
+            <a href="About.html">About Us</a>
+            <a href="Contact.html">Contact</a>
+            <a href="Privacy-Policy.html">Privacy Policy</a>
+        </div>
         <div class="footer-social"><span>Follow along</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook ↗</a><a href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube ↗</a></div>
-        <small>© 2026 MobileHub · Demo storefront</small>
+        <small>© 2026 MobileHub · Multi-Category Tech Store</small>
     </footer>
 </body>
 </html>

@@ -24,7 +24,8 @@ public record ProductResponse(
         List<Variant> variants,
         List<String> colors,
         String description,
-        List<Review> reviews) {
+        List<Review> reviews,
+        String category) {
 
     public record Variant(String ram, String storage, BigDecimal price) { }
     public record Review(String name, int rating, String text) { }
