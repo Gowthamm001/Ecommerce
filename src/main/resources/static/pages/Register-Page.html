@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#12345a">
+    <title>Register | MobileHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/storefront.css">
+    <script src="../scripts/cart.js" defer></script>
+    <script src="../scripts/storefront.js" defer></script>
+    <script src="../scripts/auth.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-top"><a class="brand" href="Home-Page.html" aria-label="MobileHub home"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="register-search">Search products</label><input id="register-search" type="search" placeholder="Search mobiles, laptops, electronics & accessories"><button type="submit" aria-label="Search">⌕</button></form><div class="header-actions"><a class="nav-cart" href="Cart.html">Cart <span class="cart-count" data-cart-count>0</span></a></div></div>
+        <nav class="site-nav" aria-label="Main navigation"><a href="Home-Page.html">Home</a><a href="Products.html">All Products</a><a href="Products.html?category=Mobiles">Mobiles</a><a href="Products.html?category=Laptops">Laptops</a><a href="Products.html?category=Electronics">Electronics</a><a href="Products.html?category=Accessories">Accessories</a><span class="nav-divider" aria-hidden="true"></span><a href="About.html">About</a><a href="Contact.html">Contact</a><a href="Login-Page.html">Login</a><a href="Register-Page.html" aria-current="page">Register</a></nav>
+    </header>
+    <main class="auth-shell">
+        <section class="auth-card auth-card--register" aria-labelledby="register-heading">
+            <p class="eyebrow">JOIN MOBILEHUB</p>
+            <h1 id="register-heading">Create your account</h1>
+            <form class="auth-form" data-register-form>
+                <p class="auth-status" data-auth-status aria-live="polite"></p>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="fname">First name</label>
+                        <input required maxlength="80" minlength="2" type="text" id="fname" name="fname" autocomplete="given-name" placeholder="Enter first name">
+                    </div>
+                    <div class="form-field">
+                        <label for="lname">Last name</label>
+                        <input required maxlength="80" minlength="2" type="text" id="lname" name="lname" autocomplete="family-name" placeholder="Enter last name">
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input required type="email" id="email" name="email" autocomplete="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-field">
+                        <label for="phn">Phone number</label>
+                        <input required type="tel" id="phn" name="phone" pattern="[6-9][0-9]{9}" autocomplete="tel" placeholder="10-digit mobile number">
+                    </div>
+                    <div class="form-field">
+                        <label for="psw">Password</label>
+                        <input required id="psw" name="password" type="password" maxlength="72" minlength="8" autocomplete="new-password" placeholder="Create password">
+                    </div>
+                    <div class="form-field">
+                        <label for="cpsw">Confirm password</label>
+                        <input required id="cpsw" name="confirmPassword" type="password" maxlength="72" minlength="8" autocomplete="new-password" placeholder="Confirm password">
+                    </div>
+                    <div class="form-field">
+                        <label for="dob">Date of birth</label>
+                        <input required id="dob" name="dateOfBirth" type="date" autocomplete="bday">
+                    </div>
+                    <div class="form-field">
+                        <label for="state">State</label>
+                        <select name="state" id="state">
+                            <option value="NA">Choose state</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Kerala">Kerala</option>
+                        </select>
+                    </div>
+                    <div class="form-field form-field--wide">
+                        <label for="address">Address</label>
+                        <textarea rows="3" name="address" id="address" placeholder="Enter full address"></textarea>
+                    </div>
+                </div>
+                <div class="auth-actions">
+                    <button class="button button-coral" type="submit">Register</button>
+                    <button class="button button-secondary" type="reset">Cancel</button>
+                </div>
+            </form>
+            <p class="auth-links">Already registered? <a href="Login-Page.html">Sign in</a></p>
+        </section>
+    </main>
+    <footer class="site-footer"><div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Your premier destination for mobiles, laptops, electronics & accessories.</p></div><div class="footer-links"><a href="Products.html">All Products</a><a href="Products.html?category=Mobiles">Mobiles</a><a href="Products.html?category=Laptops">Laptops</a><a href="Products.html?category=Electronics">Electronics</a><a href="Products.html?category=Accessories">Accessories</a><a href="About.html">About Us</a><a href="Contact.html">Contact</a><a href="Privacy-Policy.html">Privacy Policy</a></div><div class="footer-social"><span>Follow along</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook ↗</a></div><small>© 2026 MobileHub · Demo storefront</small></footer>
+</body>
+
+</html>

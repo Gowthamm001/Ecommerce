@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#12345a">
+    <title>Privacy Policy | MobileHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/storefront.css">
+    <script src="../scripts/cart.js" defer></script>
+    <script src="../scripts/storefront.js" defer></script>
+    <script src="../scripts/auth.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-top">
+            <a class="brand" href="Home-Page.html" aria-label="MobileHub home"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a>
+            <form class="header-search" data-header-search action="Products.html" role="search"><label class="sr-only" for="privacy-search">Search products</label><input id="privacy-search" type="search" placeholder="Search mobiles, laptops, electronics & accessories"><button type="submit" aria-label="Search">⌕</button></form>
+            <div class="header-actions"><a class="nav-cart" href="Cart.html">Cart <span class="cart-count" data-cart-count>0</span></a></div>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation"><a href="Home-Page.html">Home</a><a href="Products.html">All Products</a><a href="Products.html?category=Mobiles">Mobiles</a><a href="Products.html?category=Laptops">Laptops</a><a href="Products.html?category=Electronics">Electronics</a><a href="Products.html?category=Accessories">Accessories</a><span class="nav-divider" aria-hidden="true"></span><a href="About.html">About</a><a href="Contact.html">Contact</a><a href="Login-Page.html">Login</a><a href="Register-Page.html">Register</a></nav>
+    </header>
+    <main class="page-shell policy-page">
+        <section class="page-intro"><p class="eyebrow">YOUR PRIVACY MATTERS</p><h1>Privacy policy<span>.</span></h1><p>This demo storefront keeps cart items in your browser and does not process payments.</p></section>
+        <section class="policy-copy">
+            <h2>Information used by the storefront</h2><p>Product information is retrieved from the MobileHub product service. Guest cart items are saved in browser local storage; signed-in cart items are stored with your account. Account sign-in uses an HttpOnly authentication cookie and CSRF protection. This storefront does not process payments.</p>
+            <h2>External services</h2><p>Product images and web fonts may be requested from their respective providers when you browse the site. Their privacy practices are governed by those providers.</p>
+            <h2>Contact</h2><p>For questions about this sample storefront, visit our <a href="Contact.html">contact page</a>. Do not enter sensitive personal or payment information into this demo.</p>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-main"><a class="brand brand-light" href="Home-Page.html"><span class="brand-mark">M</span><span class="brand-name">Mobile<span>Hub</span></span></a><p>Your premier destination for mobiles, laptops, electronics & accessories.</p></div>
+        <div class="footer-links"><a href="Products.html">All Products</a><a href="Products.html?category=Mobiles">Mobiles</a><a href="Products.html?category=Laptops">Laptops</a><a href="Products.html?category=Electronics">Electronics</a><a href="Products.html?category=Accessories">Accessories</a><a href="About.html">About Us</a><a href="Contact.html">Contact</a><a href="Privacy-Policy.html" aria-current="page">Privacy Policy</a></div>
+        <div class="footer-social"><span>Follow along</span><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram ↗</a><a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook ↗</a><a href="https://www.youtube.com/" target="_blank" rel="noreferrer">YouTube ↗</a></div>
+        <small>© 2026 MobileHub · Demo storefront</small>
+    </footer>
+</body>
+</html>
